@@ -1,0 +1,28 @@
+{
+  "name": "node128",
+  "version": "0.1.0",
+  "description": "a simple code 128 encoder for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Holger-Will/node128.git"
+  },
+  "keywords": [
+    "code",
+    "128",
+    "barcode"
+  ],
+  "author": "Holger Will",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Holger-Will/node128/issues"
+  },
+  "homepage": "https://github.com/Holger-Will/node128#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  }
+}
