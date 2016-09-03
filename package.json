@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha test"
   },
+  "bin": {
+    "encode128": "./encode128"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Holger-Will/node128.git"
