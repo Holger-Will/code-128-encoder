@@ -133,7 +133,6 @@ module.exports = function Code128Generator(){
   }.bind(this)
   this.getChecksum = function(s){
     var cs = this.getCodeFromASCII(s.codePointAt(0))
-    console.log(cs)
     for(var i=1; i< s.length;i++){
       cs += this.getCodeFromASCII(s.codePointAt(i)) * i
     }
