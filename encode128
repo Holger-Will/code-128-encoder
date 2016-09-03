@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+"use strict";
+var Encoder = require("./")
+var encoder = new Encoder()
+console.log(encoder.encode(process.argv[2]))
