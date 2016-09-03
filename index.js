@@ -117,6 +117,13 @@ module.exports = function Code128Generator(){
     })
     return code
   }.bind(this)
+  this.getASCIIFromCodeC = function(code){
+    var ascii
+    codes.some(function(item){
+        if(item.C===code) ascii=item.ascii[0]
+    })
+    return ascii
+  }.bind(this)
   this.getASCIIFromCode = function(code){
     var ascii
     codes.some(function(item){
@@ -126,15 +133,70 @@ module.exports = function Code128Generator(){
   }.bind(this)
   this.getChecksum = function(s){
     var cs = this.getCodeFromASCII(s.codePointAt(0))
+    console.log(cs)
     for(var i=1; i< s.length;i++){
       cs += this.getCodeFromASCII(s.codePointAt(i)) * i
     }
     return cs%103
   }.bind(this)
   this.encode = function(s,options = {}){
-    var tmp = "Ñ" + s //for now just use Code 2
+    var tmp = this.optimize(s,0,4)
     tmp += String.fromCharCode(this.getASCIIFromCode(this.getChecksum(tmp)))
     tmp += "Ó"
     return tmp
   }.bind(this)
+
+  this.optimize =function(s,start,min){
+    var counter =0
+    var res = []
+    var ns = ""
+    for(var i=start; i< s.length;i++){
+      var c = s[i]
+      res.push(c)
+      if(!isNaN(c)){
+        counter++
+        if(counter>=2 && counter%2 == 0){
+          res.pop()
+          res.pop()
+          res.push(s[i-1]+""+c)
+        }
+      }else{
+        ns = this.optimize(s,i+1,6)
+        break;
+      }
+    }
+    min = (i==s.length)? 4:min
+    var current="B" //code B
+    var sc=""
+    if(start==0){
+      current="B" //Start code B
+      sc="Ñ" // startcode B
+    }
+    if(counter>=min){
+      if(start==0){
+        current="C" //Start code C
+        sc="Ò" // startcode C
+      }else{
+        current="C"
+        sc="Ì" // switch to C
+      }
+
+      for(var i = 0;i<res.length;i++){
+        if(res[i].length==2){
+          res[i] = String.fromCharCode(this.getASCIIFromCodeC(res[i]))
+        }else{
+          if(current=="C"){
+            res[i] = "Í"+res[i] //switch to Code B
+            current="B"
+          }
+        }
+      }
+
+      s2=sc + res.join("")
+    }else{
+      s2=sc+res.join("")
+    }
+    return s2 + ns
+  }.bind(this)
+
 }

@@ -1,7 +1,18 @@
 ## node128
 
-a simple Code 128 encoder for node.js.
+a simple Code 128 encoder (optimizing).
 
+## install
+
+    npm install -g node128
+
+## use the cli
+
+    encode128 yourText
+
+outputs the encoded string.
+
+## use in your own Projects
 
 When you pass a string to its encode function, it adds the start and stop codes to the string and calculates the checksum.
 It is supposed to work with a [code 128 font](https://github.com/Holger-Will/code128)  
