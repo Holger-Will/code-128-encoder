@@ -1,6 +1,6 @@
 {
   "name": "node128",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "a simple code 128 encoder for node.js",
   "main": "index.js",
   "scripts": {
