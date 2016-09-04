@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <title>Encoder</title>
+    <script src="bower_components/code-128-encoder/code-128-encoder.min.js"></script>
+    <style>
+      @font-face { font-family: 'code128'; src: url('bower_components/code-128-encoder/fonts/code128_XL.ttf'); }
+      .container {display:flex;flex-direction:column;align-items:center;width:300px}
+      .barcode { font-family: code128; font-size:50px; margin-top:10px}
+      .cleartext {}
+    </style>
+    <script>
+      function change(){
+        var encoder = new Code128Generator()
+        var text = document.getElementById("input").value
+        document.querySelector(".barcode").innerHTML=encoder.encode(text)
+        document.querySelector(".cleartext").innerHTML=text
+      }
+    </script>
+  </head>
+  <body onload="change()">
+    <h2>Code 128 Encoder example</h2>
+    This example uses the code 128 font that comes with the code-128-encoder package.<br/>
+    type some Text: <input id="input" type="text" value="Test" onkeyup="change()"/>
+    <div class="container">
+      <div class="barcode"></div>
+      <div class="cleartext"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <title>Encoder</title>
+    <script src="bower_components/code-128-encoder/code-128-encoder.min.js"></script>
+    <style>
+      #canvas {margin:10px}
+    </style>
+    <script>
+      function change(){
+        var encoder = new Code128Generator()
+        var text = document.getElementById("input").value
+        var encoded =encoder.encode(text,{output:"weights"})
+        var canvas = document.querySelector("#canvas")
+        var ctx = canvas.getContext("2d")
+        ctx.clearRect(0,0,300,150)
+        var offset = 0
+        for(var i = 0; i<encoded.length;i++){
+          var current = parseInt(encoded[i])*2
+          if(i%2==1){
+            console.log("bar",offset,offset+current)
+            ctx.fillRect(offset,5,current,140)
+          }
+          offset+=current
+        }
+      }
+    </script>
+  </head>
+  <body onload="change()">
+    <h2>Code 128 Encoder example</h2>
+    This example does not use the font, but instead uses the output method "weights" to render the barcode to a canvas<br/>
+    type some Text: <input id="input" type="text" value="Test" onkeyup="change()"/><br/>
+    <canvas id="canvas" width="300px" height="150px"></canvas>
+  </body>
+</html>

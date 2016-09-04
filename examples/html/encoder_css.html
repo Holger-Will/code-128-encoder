@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <title>Encoder</title>
+    <script src="bower_components/code-128-encoder/code-128-encoder.min.js"></script>
+    <style>
+      .barcode{display:flex;flex-direction:row;margin:10px}
+      .bar{background:black}
+      .space{background:white}
+    </style>
+    <script>
+      function change(){
+        var encoder = new Code128Generator()
+        var text = document.getElementById("input").value
+        var encoded =encoder.encode(text,{output:"weights"})
+        var barcode = document.querySelector(".barcode")
+        barcode.innerHTML=""
+        var offset=0
+        for(var i = 0; i<encoded.length;i++){
+          var current = parseInt(encoded[i])*2
+          var div = document.createElement("div")
+          div.style.width=current+"px"
+          div.style.height="100px"
+          if(i%2==1){
+            div.className="bar"
+          }else{
+            div.className="space"
+          }
+          offset+=current
+          barcode.appendChild(div)
+        }
+        console.log(barcode)
+      }
+    </script>
+  </head>
+  <body onload="change()">
+    <h2>Code 128 Encoder example</h2>
+    This example does not use the font, uses pure html/css to render the barcode. the barcode below is just some divs<br/>
+    type some Text: <input id="input" type="text" value="Test" onkeyup="change()"/><br/>
+    <div class="barcode"></div>
+  </body>
+</html>

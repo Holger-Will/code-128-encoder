@@ -1,0 +1,24 @@
+\documentclass[10pt]{report}
+\usepackage[paperwidth=5cm,paperheight=2cm,margin=5pt]{geometry}
+\usepackage{fontspec}
+\usepackage{datatool}
+\usepackage{mathptmx}
+\usepackage{anyfontsize}
+\usepackage{setspace}
+
+\setmainfont[Path=../../fonts/]{code128_XL.ttf}
+
+\DTLsetseparator{|}
+\DTLloaddb{produkt}{data.csv}
+\DTLforeach*{produkt}{\name=name,\encoded,\desc=desc}
+
+\renewcommand{\baselinestretch}{0.5}
+\begin{document}
+{\centering
+{\fontsize{30}{0}\selectfont \encoded}\\
+\sffamily
+{\fontsize{5}{5}\selectfont \name}\\}
+\baselineskip10pt
+\sffamily
+{\fontsize{5}{5}\selectfont \encoded}
+\end{document}
