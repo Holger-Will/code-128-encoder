@@ -38,6 +38,10 @@ to see more options use:
 
     encode128 -h
 
+you can pipe data from other commands using `encode128 -`.
+
+    echo "Test" | encode128 -o weights -
+
 ### use in your Browser
 
 after installing the encoder with bower you can use it like this:

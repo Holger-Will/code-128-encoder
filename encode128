@@ -20,7 +20,17 @@ function doencode(){
     }
   }
   if(process.argv.length>2){
-    console.log(encoder.encode(process.argv[i-1],{output:o}))
+    if(process.argv[i-1]=="-"){
+      process.stdin.resume()
+      process.stdin.setEncoding("utf-8")
+      process.stdin.on("data",function(data){
+        data = data.replace("\n","")
+        console.log(encoder.encode(data,{output:o}))
+        process.exit()
+      })
+    }else{
+      console.log(encoder.encode(process.argv[i-1],{output:o}))
+    }
   }else{
     displayHelp()
   }
@@ -36,5 +46,7 @@ function displayHelp(){
   console.log("\t \t codes: \t an array of code numbers,\n\t\t\t\t where each number code index in the code 128 spec")
   console.log("\t \t array: \t an arry of ascii code points")
 }
+
+
 
 doencode()
