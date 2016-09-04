@@ -1,6 +1,6 @@
 ## code-128-encoder
 
-an optimizing encoder for node.js, the commandline, and your browser.
+an optimizing code-128 encoder for node.js, the commandline, and your browser.
 
 **this is not a renderer!**
 
@@ -81,5 +81,12 @@ the output parameter can be one of:
 | codes | [ 104, 52, 69, 83, 84, 55, 106 ] | an array of code numbers as per the code 128 spec |
 | array | [ 209, 84, 101, 115, 116, 87, 211 ] | the ascii code points of the encoded string |
 
+
+### Examples Folder
+
 you can use this to write your own renderer.
-Examples will follow...
+in the examples Folder, there are a few example renderer.
+
+the html folder holds examples for rendering barcodes client side in the browser using a base128 font, canvas or just divs. for the html examples to work, go to the examples/html folder, and do `bower install`
+
+in the cli folder there is a ->svg->inkscape->png renderer, a plaintext renderer which renders the barcode using ascii art, and a latext rederer.
