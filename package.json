@@ -1,7 +1,7 @@
 {
-  "name": "node128",
-  "version": "1.1.0",
-  "description": "a simple code 128 encoder for node.js",
+  "name": "code-128-encoder",
+  "version": "0.1.0",
+  "description": "an optimizing encoder for your commandline, node.js and your browser",
   "main": "index.js",
   "scripts": {
     "test": "mocha test"
@@ -11,21 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Holger-Will/node128.git"
+    "url": "git+https://github.com/Holger-Will/code-128-encoder.git"
   },
   "keywords": [
-    "code",
-    "128",
+    "code 128",
+    "encoder",
     "barcode"
   ],
   "author": "Holger Will",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Holger-Will/node128/issues"
+    "url": "https://github.com/Holger-Will/code-128-encoder/issues"
   },
-  "homepage": "https://github.com/Holger-Will/node128#readme",
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.0.2"
-  }
+  "homepage": "https://github.com/Holger-Will/code-128-encoder#readme"
 }
