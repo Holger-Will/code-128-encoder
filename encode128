@@ -25,6 +25,7 @@ function doencode(){
     displayHelp()
   }
 }
+
 function displayHelp(){
   console.log("usage: \t encode128 [OPTIONS...] STRING_TO_ENCODE\n")
   console.log("OPTIONS\n-------\n\n")
