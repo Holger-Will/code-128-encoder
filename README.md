@@ -76,7 +76,7 @@ the output parameter can be one of:
 | name | example | description |
 | --- | --- | --- |
 | ascii | ÑTestWÓ | the ascii characters of the encoded string |
-| bars | 1101001000011011100010101100100001011110010010011110100111010001101100011101011 | a 1 represents a bar a 0 represents a space |
+| bars | 11010010000110111000101011001... | a 1 represents a bar a 0 represents a space |
 | weights | 2112142133111122141142121241123113212331112 | each number represents a width alternating between bars and spaces |
 | codes | [ 104, 52, 69, 83, 84, 55, 106 ] | an array of code numbers as per the code 128 spec |
 | array | [ 209, 84, 101, 115, 116, 87, 211 ] | the ascii code points of the encoded string |
