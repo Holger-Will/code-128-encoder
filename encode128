@@ -20,7 +20,7 @@ function doencode(){
     }
   }
   if(process.argv.length>2){
-    console.log(encoder.encode(process.argv[2],{output:o}))
+    console.log(encoder.encode(process.argv[i-1],{output:o}))
   }else{
     displayHelp()
   }
