@@ -1,4 +1,24 @@
-module.exports = function Code128Generator(){
+"use strict";
+
+(function() {
+  var root = this
+  var previous_Code128Generator = root.Code128Generator
+  if( typeof exports !== 'undefined' ) {
+    if( typeof module !== 'undefined' && module.exports ) {
+      exports = module.exports = Code128Generator
+    }
+    exports.Code128Generator = Code128Generator
+  }
+  else {
+    root.Code128Generator = Code128Generator
+  }
+  Code128Generator.noConflict = function() {
+    root.Code128Generator = previous_Code128Generator
+    return Code128Generator
+  }
+}).call(this);
+
+function Code128Generator(){
   var codes=[
   {"code":0, "A":" ", "B":" ","C":"00","ascii":[32,212,252], "bars":"11011001100", "weights":"212222"},
   {"code":1, "A":"!", "B":"!", "C":"01", "ascii":[33], "bars":"11001101100" ,"weights":"222122"},
@@ -117,6 +137,24 @@ module.exports = function Code128Generator(){
     })
     return code
   }.bind(this)
+  this.getBarsFromASCII = function (ascii){
+    var code
+    codes.some(function(item){
+      item.ascii.some(function(a){
+        if(a===ascii) code=item.bars
+      })
+    })
+    return code
+  }.bind(this)
+  this.getWeightsFromASCII = function (ascii){
+    var code
+    codes.some(function(item){
+      item.ascii.some(function(a){
+        if(a===ascii) code=item.weights
+      })
+    })
+    return code
+  }.bind(this)
   this.getASCIIFromCodeC = function(code){
     var ascii
     codes.some(function(item){
@@ -138,11 +176,44 @@ module.exports = function Code128Generator(){
     }
     return cs%103
   }.bind(this)
-  this.encode = function(s,options = {}){
+  this.encode = function(s,options = {output:"ascii"}){
     var tmp = this.optimize(s,0,4)
     tmp += String.fromCharCode(this.getASCIIFromCode(this.getChecksum(tmp)))
     tmp += "Ó"
-    return tmp
+    switch(options.output){
+      case "ascii":
+        return tmp
+      break
+      case "bars":
+        var cs=""
+        for(var i=0; i< tmp.length;i++){
+          cs += this.getBarsFromASCII(tmp.codePointAt(i))
+        }
+        return cs
+      break
+      case "weights":
+        var cs=""
+        for(var i=0; i< tmp.length;i++){
+          cs += this.getWeightsFromASCII(tmp.codePointAt(i))
+        }
+        return cs
+      break
+      case "codes":
+        var cs=[]
+        for(var i=0; i< tmp.length;i++){
+          cs.push( this.getCodeFromASCII(tmp.codePointAt(i)))
+        }
+        return cs
+      break
+      case "array":
+        var cs=[]
+        for(var i=0; i< tmp.length;i++){
+          cs.push( tmp.codePointAt(i))
+        }
+        return cs
+      break
+    }
+
   }.bind(this)
 
   this.optimize =function(s,start,min){
@@ -179,7 +250,6 @@ module.exports = function Code128Generator(){
         current="C"
         sc="Ì" // switch to C
       }
-
       for(var i = 0;i<res.length;i++){
         if(res[i].length==2){
           res[i] = String.fromCharCode(this.getASCIIFromCodeC(res[i]))
@@ -190,12 +260,8 @@ module.exports = function Code128Generator(){
           }
         }
       }
-
-      s2=sc + res.join("")
-    }else{
-      s2=sc+res.join("")
     }
-    return s2 + ns
+    return sc + res.join("") + ns
   }.bind(this)
 
 }
