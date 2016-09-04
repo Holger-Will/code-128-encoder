@@ -176,7 +176,8 @@ function Code128Generator(){
     }
     return cs%103
   }.bind(this)
-  this.encode = function(s,options = {output:"ascii"}){
+  this.encode = function(s,options){
+    if(!options) options = {output:"ascii"}
     var tmp = this.optimize(s,0,4)
     tmp += String.fromCharCode(this.getASCIIFromCode(this.getChecksum(tmp)))
     tmp += "Ó"
