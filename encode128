@@ -2,4 +2,38 @@
 "use strict";
 var Encoder = require("./")
 var encoder = new Encoder()
-console.log(encoder.encode(process.argv[2]))
+
+function doencode(){
+  var o="ascii"
+  for(var i = 2;i<process.argv.length;i++){
+    switch(process.argv[i]){
+      case "-o":
+      case "--output":
+        i++
+        o = process.argv[i]
+      break
+      case "-h":
+      case "--help":
+        displayHelp()
+        return
+      break
+    }
+  }
+  if(process.argv.length>2){
+    console.log(encoder.encode(process.argv[2],{output:o}))
+  }else{
+    displayHelp()
+  }
+}
+function displayHelp(){
+  console.log("usage: \t encode128 [OPTIONS...] STRING_TO_ENCODE\n")
+  console.log("OPTIONS\n-------\n\n")
+  console.log("-o, \t --output [output-option] \t changes the output of the encoder. possible outputs are:\n")
+  console.log("\t \t ascii: \t a string of ascii characters (default)")
+  console.log("\t \t bars: \t\t a as string of bars and spaces,\n\t\t\t\t where a bar is represented as 1 and a space represented as 0")
+  console.log("\t \t weights: \t a as string of weights,\n\t\t\t\t where each number represents a length of countinous spaces or lines")
+  console.log("\t \t codes: \t an array of code numbers,\n\t\t\t\t where each number code index in the code 128 spec")
+  console.log("\t \t array: \t an arry of ascii code points")
+}
+
+doencode()
