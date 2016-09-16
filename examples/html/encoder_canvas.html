@@ -18,7 +18,7 @@
         var offset = 0
         for(var i = 0; i<encoded.length;i++){
           var current = parseInt(encoded[i])*2
-          if(i%2==1){
+          if(i%2==0){
             console.log("bar",offset,offset+current)
             ctx.fillRect(offset,5,current,140)
           }
