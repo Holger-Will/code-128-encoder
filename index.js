@@ -224,7 +224,7 @@ function Code128Generator(){
     for(var i=start; i< s.length;i++){
       var c = s[i]
       res.push(c)
-      if(!isNaN(c)){
+      if(!isNaN(parseInt(c))){
         counter++
         if(counter>=2 && counter%2 == 0){
           res.pop()
