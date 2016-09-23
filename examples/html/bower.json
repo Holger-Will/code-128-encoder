@@ -21,6 +21,6 @@
     "tests"
   ],
   "dependencies": {
-    "code-128-encoder": "^1.1.0"
+    "code-128-encoder": "^2.0.1"
   }
 }
