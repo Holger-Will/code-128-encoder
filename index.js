@@ -137,6 +137,15 @@ function Code128Generator(){
     })
     return code
   }.bind(this)
+  this.getAllFromASCII = function (ascii){
+    var code
+    codes.some(function(item){
+      item.ascii.some(function(a){
+        if(a===ascii) code=item
+      })
+    })
+    return code
+  }.bind(this)
   this.getBarsFromASCII = function (ascii){
     var code
     codes.some(function(item){
@@ -210,6 +219,13 @@ function Code128Generator(){
         var cs=[]
         for(var i=0; i< tmp.length;i++){
           cs.push( tmp.codePointAt(i))
+        }
+        return cs
+      break
+      case "all":
+        var cs=[]
+        for(var i=0; i< tmp.length;i++){
+          cs.push( this.getAllFromASCII(tmp.codePointAt(i)))
         }
         return cs
       break

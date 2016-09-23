@@ -18,4 +18,8 @@ describe('node128', function() {
       var encoder= new Encoder()
       assert(encoder.encode("Test"),"ÑTestWÓ")
     })
+    it('return all infos', function () {
+      var encoder= new Encoder()
+      assert(encoder.encode("Test",{output:"all"}).length,7)
+    })
 })
