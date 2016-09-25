@@ -118,15 +118,15 @@ function Code128Generator(){
   {"code":95, "A":"US", "B":"DEL", "C":"95","ascii":[200,240], "bars":"10111101000" ,"weights":"114113"},
   {"code":96, "A":"FNC 3", "B":"FNC 3", "C":"96", "ascii":[201,241], "bars":"10111100010" ,"weights":"114311"},
   {"code":97, "A":"FNC 2", "B":"FNC 2", "C":"97", "ascii":[202,242], "bars":"11110101000" ,"weights":"411113"},
-  {"code":98, "A":"Shift B", "B":"Shift A", "C": "98", "ascii":[203,243], "bars":"11110100010" ,"weights":"411311"},
-  {"code":99, "A":"Code C", "B":"Code C", "C": "99", "ascii":[204,244], "bars":"10111011110" ,"weights":"113141"},
-  {"code":100, "A":"Code B", "B":"FNC 4", "C": "Code B", "ascii":[205,245], "bars":"10111101110" ,"weights":"114131"},
-  {"code":101, "A":"FNC 4", "B":"Code A", "C": "Code A", "ascii":[206,246], "bars":"11101011110" ,"weights":"311141"},
-  {"code":102, "A":"FNC 1", "B":"FNC 1", "C": "FNC 1", "ascii":[207,247], "bars":"11110101110" ,"weights":"411131"},
-  {"code":103, "A":"Start Code A", "ascii":[208,248], "bars":"11010000100" ,"weights":"211412"},
-  {"code":104, "A":"Start Code B", "ascii":[209,249], "bars":"11010010000" ,"weights":"211214"},
-  {"code":105, "A":"Start Code C", "ascii":[210,250], "bars":"11010011100" ,"weights":"211232"},
-  {"code":106, "A":"Stop (7 bars/spaces)", "ascii":[211,251], "bars":"1100011101011" ,"weights":"2331112"}
+  {"code":98, "A":"B:", "B:":"A", "C": "98", "ascii":[203,243], "bars":"11110100010" ,"weights":"411311"},
+  {"code":99, "A":"C:", "B":"C:", "C": "99", "ascii":[204,244], "bars":"10111011110" ,"weights":"113141"},
+  {"code":100, "A":"B:", "B":"FNC 4", "C": "B:", "ascii":[205,245], "bars":"10111101110" ,"weights":"114131",role:"ctrl"},
+  {"code":101, "A":"FNC 4", "B":"A", "C": "A", "ascii":[206,246], "bars":"11101011110" ,"weights":"311141",role:"ctrl"},
+  {"code":102, "A":"FNC 1", "B":"FNC 1", "C": "FNC 1", "ascii":[207,247], "bars":"11110101110" ,"weights":"411131",role:"ctrl"},
+  {"code":103, "A":"A:","B":"A","C":"A", "ascii":[208,248], "bars":"11010000100" ,"weights":"211412",role:"ctrl"},
+  {"code":104, "A":"B:","B":"B","C":"B", "ascii":[209,249], "bars":"11010010000" ,"weights":"211214",role:"ctrl"},
+  {"code":105, "A":"C:","B":"C","C":"C", "ascii":[210,250], "bars":"11010011100" ,"weights":"211232",role:"ctrl"},
+  {"code":106, "A":"Stop (7 bars/spaces)","B":"Stop","C":"Stop", "ascii":[211,251], "bars":"1100011101011" ,"weights":"2331112",role:"ctrl"}
   ]
   this.getCodeFromASCII = function (ascii){
     var code
@@ -224,8 +224,16 @@ function Code128Generator(){
       break
       case "all":
         var cs=[]
+        var current ="B"
         for(var i=0; i< tmp.length;i++){
-          cs.push( this.getAllFromASCII(tmp.codePointAt(i)))
+          var item = this.getAllFromASCII(tmp.codePointAt(i))
+          item.symbol=item[current]
+          if(item.ascii[0]==204) current="C"
+          if(item.ascii[0]==210) current="C"
+          if(item.ascii[0]==205) current="B"
+          if(item.ascii[0]==209) current="B"
+          console.log(item)
+          cs.push( item)
         }
         return cs
       break

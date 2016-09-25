@@ -22,4 +22,9 @@ describe('node128', function() {
       var encoder= new Encoder()
       assert(encoder.encode("Test",{output:"all"}).length,7)
     })
+    it('return all infos', function () {
+      var encoder= new Encoder()
+      var out=encoder.encode("ABC123456",{output:"all"})
+      assert(out.length,7)
+    })
 })
