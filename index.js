@@ -226,13 +226,16 @@ function Code128Generator(){
         var cs=[]
         var current ="B"
         for(var i=0; i< tmp.length;i++){
-          var item = this.getAllFromASCII(tmp.codePointAt(i))
+          var item = JSON.parse(JSON.stringify(this.getAllFromASCII(tmp.codePointAt(i))))
           item.symbol=item[current]
-          if(item.ascii[0]==204) current="C"
+          if(item.ascii[0]==204 && current=="B") {
+            current="C"
+            item.role="ctrl"
+          }
           if(item.ascii[0]==210) current="C"
           if(item.ascii[0]==205) current="B"
           if(item.ascii[0]==209) current="B"
-          console.log(item)
+          if(i==tmp.length-2) item.symbol=item.B
           cs.push( item)
         }
         return cs
