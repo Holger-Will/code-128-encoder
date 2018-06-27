@@ -187,9 +187,10 @@ function Code128Generator(){
   }.bind(this)
   this.encode = function(s,options){
     if(!options) options = {output:"ascii"}
+    var stopCode = String.fromCharCode(this.getASCIIFromCode(106))
     var tmp = this.optimize(s,0,4)
     tmp += String.fromCharCode(this.getASCIIFromCode(this.getChecksum(tmp)))
-    tmp += "Ó"
+    tmp += stopCode
     switch(options.output){
       case "ascii":
         return tmp
@@ -266,24 +267,30 @@ function Code128Generator(){
     min = (i==s.length)? 4:min
     var current="B" //code B
     var sc=""
+    var startCodeA = String.fromCharCode(this.getASCIIFromCode(103))
+    var startCodeB = String.fromCharCode(this.getASCIIFromCode(104))
+    var startCodeC = String.fromCharCode(this.getASCIIFromCode(105))
+    var switchCodeToC = String.fromCharCode(this.getASCIIFromCode(99))
+    var switchCodeToB = String.fromCharCode(this.getASCIIFromCode(100))
+    var switchCodeToA = String.fromCharCode(this.getASCIIFromCode(101))
     if(start==0){
       current="B" //Start code B
-      sc="Ñ" // startcode B
+      sc=startCodeB // startcode B
     }
     if(counter>=min){
       if(start==0){
         current="C" //Start code C
-        sc="Ò" // startcode C
+        sc=startCodeC // startcode C
       }else{
         current="C"
-        sc="Ì" // switch to C
+        sc=switchCodeToC // switch to C
       }
       for(var i = 0;i<res.length;i++){
         if(res[i].length==2){
           res[i] = String.fromCharCode(this.getASCIIFromCodeC(res[i]))
         }else{
           if(current=="C"){
-            res[i] = "Í"+res[i] //switch to Code B
+            res[i] = switchCodeToB+res[i] //switch to Code B
             current="B"
           }
         }
