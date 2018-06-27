@@ -118,7 +118,7 @@ function Code128Generator(){
   {"code":95, "A":"US", "B":"DEL", "C":"95","ascii":[200,240], "bars":"10111101000" ,"weights":"114113"},
   {"code":96, "A":"FNC 3", "B":"FNC 3", "C":"96", "ascii":[201,241], "bars":"10111100010" ,"weights":"114311"},
   {"code":97, "A":"FNC 2", "B":"FNC 2", "C":"97", "ascii":[202,242], "bars":"11110101000" ,"weights":"411113"},
-  {"code":98, "A":"B:", "B:":"A", "C": "98", "ascii":[203,243], "bars":"11110100010" ,"weights":"411311"},
+  {"code":98, "A":"B:", "B":"A", "C": "98", "ascii":[203,243], "bars":"11110100010" ,"weights":"411311"},
   {"code":99, "A":"C:", "B":"C:", "C": "99", "ascii":[204,244], "bars":"10111011110" ,"weights":"113141"},
   {"code":100, "A":"B:", "B":"FNC 4", "C": "B:", "ascii":[205,245], "bars":"10111101110" ,"weights":"114131",role:"ctrl"},
   {"code":101, "A":"FNC 4", "B":"A", "C": "A", "ascii":[206,246], "bars":"11101011110" ,"weights":"311141",role:"ctrl"},
@@ -187,9 +187,10 @@ function Code128Generator(){
   }.bind(this)
   this.encode = function(s,options){
     if(!options) options = {output:"ascii"}
+    var stopCode = String.fromCharCode(this.getASCIIFromCode(106))
     var tmp = this.optimize(s,0,4)
     tmp += String.fromCharCode(this.getASCIIFromCode(this.getChecksum(tmp)))
-    tmp += "Ó"
+    tmp += stopCode
     switch(options.output){
       case "ascii":
         return tmp
@@ -266,24 +267,30 @@ function Code128Generator(){
     min = (i==s.length)? 4:min
     var current="B" //code B
     var sc=""
+    var startCodeA = String.fromCharCode(this.getASCIIFromCode(103))
+    var startCodeB = String.fromCharCode(this.getASCIIFromCode(104))
+    var startCodeC = String.fromCharCode(this.getASCIIFromCode(105))
+    var switchCodeToC = String.fromCharCode(this.getASCIIFromCode(99))
+    var switchCodeToB = String.fromCharCode(this.getASCIIFromCode(100))
+    var switchCodeToA = String.fromCharCode(this.getASCIIFromCode(101))
     if(start==0){
       current="B" //Start code B
-      sc="Ñ" // startcode B
+      sc=startCodeB // startcode B
     }
     if(counter>=min){
       if(start==0){
         current="C" //Start code C
-        sc="Ò" // startcode C
+        sc=startCodeC // startcode C
       }else{
         current="C"
-        sc="Ì" // switch to C
+        sc=switchCodeToC // switch to C
       }
       for(var i = 0;i<res.length;i++){
         if(res[i].length==2){
           res[i] = String.fromCharCode(this.getASCIIFromCodeC(res[i]))
         }else{
           if(current=="C"){
-            res[i] = "Í"+res[i] //switch to Code B
+            res[i] = switchCodeToB+res[i] //switch to Code B
             current="B"
           }
         }
