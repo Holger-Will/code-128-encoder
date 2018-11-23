@@ -115,19 +115,20 @@ function Code128Generator(){
   {"code":92, "A":"FS", "B":"|", "C":"92", "ascii":[124], "bars":"10101111000" ,"weights":"111143"},
   {"code":93, "A":"GS", "B":"}", "C":"93", "ascii":[125], "bars":"10100011110" ,"weights":"111341"},
   {"code":94, "A":"RS", "B":"~", "C":"94", "ascii":[126], "bars":"10001011110" ,"weights":"131141"},
-  {"code":95, "A":"US", "B":"DEL", "C":"95","ascii":[200,240], "bars":"10111101000" ,"weights":"114113"},
-  {"code":96, "A":"FNC 3", "B":"FNC 3", "C":"96", "ascii":[201,241], "bars":"10111100010" ,"weights":"114311"},
-  {"code":97, "A":"FNC 2", "B":"FNC 2", "C":"97", "ascii":[202,242], "bars":"11110101000" ,"weights":"411113"},
-  {"code":98, "A":"B:", "B":"A", "C": "98", "ascii":[203,243], "bars":"11110100010" ,"weights":"411311"},
-  {"code":99, "A":"C:", "B":"C:", "C": "99", "ascii":[204,244], "bars":"10111011110" ,"weights":"113141"},
-  {"code":100, "A":"B:", "B":"FNC 4", "C": "B:", "ascii":[205,245], "bars":"10111101110" ,"weights":"114131",role:"ctrl"},
-  {"code":101, "A":"FNC 4", "B":"A", "C": "A", "ascii":[206,246], "bars":"11101011110" ,"weights":"311141",role:"ctrl"},
-  {"code":102, "A":"FNC 1", "B":"FNC 1", "C": "FNC 1", "ascii":[207,247], "bars":"11110101110" ,"weights":"411131",role:"ctrl"},
-  {"code":103, "A":"A:","B":"A","C":"A", "ascii":[208,248], "bars":"11010000100" ,"weights":"211412",role:"ctrl"},
-  {"code":104, "A":"B:","B":"B","C":"B", "ascii":[209,249], "bars":"11010010000" ,"weights":"211214",role:"ctrl"},
-  {"code":105, "A":"C:","B":"C","C":"C", "ascii":[210,250], "bars":"11010011100" ,"weights":"211232",role:"ctrl"},
-  {"code":106, "A":"Stop (7 bars/spaces)","B":"Stop","C":"Stop", "ascii":[211,251], "bars":"1100011101011" ,"weights":"2331112",role:"ctrl"}
+  {"code":95, "A":"US", "B":"DEL", "C":"95","ascii":[195,240,200], "bars":"10111101000" ,"weights":"114113"},
+  {"code":96, "A":"FNC 3", "B":"FNC 3", "C":"96", "ascii":[196,241,201], "bars":"10111100010" ,"weights":"114311"},
+  {"code":97, "A":"FNC 2", "B":"FNC 2", "C":"97", "ascii":[197,242,202], "bars":"11110101000" ,"weights":"411113"},
+  {"code":98, "A":"B:", "B":"A", "C": "98", "ascii":[198,243,203], "bars":"11110100010" ,"weights":"411311"},
+  {"code":99, "A":"C:", "B":"C:", "C": "99", "ascii":[199,244,204], "bars":"10111011110" ,"weights":"113141"},
+  {"code":100, "A":"B:", "B":"FNC 4", "C": "B:", "ascii":[200,245,205], "bars":"10111101110" ,"weights":"114131",role:"ctrl"},
+  {"code":101, "A":"FNC 4", "B":"A", "C": "A", "ascii":[201,246,206], "bars":"11101011110" ,"weights":"311141",role:"ctrl"},
+  {"code":102, "A":"FNC 1", "B":"FNC 1", "C": "FNC 1", "ascii":[202,247,207], "bars":"11110101110" ,"weights":"411131",role:"ctrl"},
+  {"code":103, "A":"A:","B":"A","C":"A", "ascii":[203,248,208], "bars":"11010000100" ,"weights":"211412",role:"ctrl"},
+  {"code":104, "A":"B:","B":"B","C":"B", "ascii":[204,249,209], "bars":"11010010000" ,"weights":"211214",role:"ctrl"},
+  {"code":105, "A":"C:","B":"C","C":"C", "ascii":[205,250,210], "bars":"11010011100" ,"weights":"211232",role:"ctrl"},
+  {"code":106, "A":"Stop (7 bars/spaces)","B":"Stop","C":"Stop", "ascii":[206,251,211], "bars":"1100011101011" ,"weights":"2331112",role:"ctrl"}
   ]
+  var options={}
   this.getCodeFromASCII = function (ascii){
     var code
     codes.some(function(item){
@@ -174,7 +175,8 @@ function Code128Generator(){
   this.getASCIIFromCode = function(code){
     var ascii
     codes.some(function(item){
-        if(item.code===code) ascii=item.ascii[0]
+      console.log(options.mapping)
+        if(item.code===code) ascii=item.ascii[options.mapping]
     })
     return ascii
   }.bind(this)
@@ -185,8 +187,9 @@ function Code128Generator(){
     }
     return cs%103
   }.bind(this)
-  this.encode = function(s,options){
-    if(!options) options = {output:"ascii"}
+  this.encode = function(s,opt){
+    options={...{output:"ascii",mapping:0},...opt}
+    console.log(options)
     var stopCode = String.fromCharCode(this.getASCIIFromCode(106))
     var tmp = this.optimize(s,0,4)
     tmp += String.fromCharCode(this.getASCIIFromCode(this.getChecksum(tmp)))
@@ -229,13 +232,13 @@ function Code128Generator(){
         for(var i=0; i< tmp.length;i++){
           var item = JSON.parse(JSON.stringify(this.getAllFromASCII(tmp.codePointAt(i))))
           item.symbol=item[current]
-          if(item.ascii[0]==204 && current=="B") {
+          if(item.ascii[0]==this.getASCIIFromCode(99) && current=="B") {
             current="C"
             item.role="ctrl"
           }
-          if(item.ascii[0]==210) current="C"
-          if(item.ascii[0]==205) current="B"
-          if(item.ascii[0]==209) current="B"
+          if(item.ascii[0]==this.getASCIIFromCode(105)) current="C"
+          if(item.ascii[0]==this.getASCIIFromCode(100)) current="B"
+          if(item.ascii[0]==this.getASCIIFromCode(104)) current="B"
           if(i==tmp.length-2) item.symbol=item.B
           cs.push( item)
         }

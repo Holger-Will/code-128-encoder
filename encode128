@@ -5,6 +5,8 @@ var encoder = new Encoder()
 
 function doencode(){
   var o="ascii"
+  var m=0
+  var pipe=false
   for(var i = 2;i<process.argv.length;i++){
     switch(process.argv[i]){
       case "-o":
@@ -12,28 +14,29 @@ function doencode(){
         i++
         o = process.argv[i]
       break
+      case "-m":
+      case "--mapping":
+        i++
+        m=parseInt(process.argv[i])
+      break
       case "-h":
       case "--help":
         displayHelp()
         return
       break
+      case "-":
+        pipe=true
+        process.stdin.resume()
+        process.stdin.setEncoding("utf-8")
+        process.stdin.on("data",function(data){
+          data = data.replace("\n","")
+          console.log(encoder.encode(data,{output:o,mapping:m}))
+          process.exit()
+        })
+      break
     }
   }
-  if(process.argv.length>2){
-    if(process.argv[i-1]=="-"){
-      process.stdin.resume()
-      process.stdin.setEncoding("utf-8")
-      process.stdin.on("data",function(data){
-        data = data.replace("\n","")
-        console.log(encoder.encode(data,{output:o}))
-        process.exit()
-      })
-    }else{
-      console.log(encoder.encode(process.argv[i-1],{output:o}))
-    }
-  }else{
-    displayHelp()
-  }
+  if(!pipe) console.log(encoder.encode(process.argv[i-1],{output:o,mapping:m}))
 }
 
 function displayHelp(){
@@ -45,6 +48,10 @@ function displayHelp(){
   console.log("\t \t weights: \t a as string of weights,\n\t\t\t\t where each number represents a length of countinous spaces or lines")
   console.log("\t \t codes: \t an array of code numbers,\n\t\t\t\t where each number code index in the code 128 spec")
   console.log("\t \t array: \t an arry of ascii code points")
+  console.log("-m, \t --mapping [mapping-option] \t changes the ascii-output of the encoder. possible outputs are:\n")
+  console.log("\t \t 0: \t common encoding used in most fonts (default)")
+  console.log("\t \t 1: \t barcodesoft encoding")
+  console.log("\t \t 2: \t faulty encoding formaly used in wikipedias mapping table")
 }
 
 
