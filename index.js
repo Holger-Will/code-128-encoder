@@ -188,7 +188,7 @@ function Code128Generator(){
     return cs%103
   }.bind(this)
   this.encode = function(s,opt){
-    options={...{output:"ascii",mapping:0},...opt}
+    options=Object.assign({output:"ascii",mapping:0},opt)
     console.log(options)
     var stopCode = String.fromCharCode(this.getASCIIFromCode(106))
     var tmp = this.optimize(s,0,4)
