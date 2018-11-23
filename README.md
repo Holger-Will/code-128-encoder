@@ -87,7 +87,7 @@ the output parameter can be one of:
 
 the mapping parameter changes the ascci character mapping and can be one of:
 
-| name | example | description |
+| name | description |
 | --- | --- |
 | 0 | most common mapping (compatible with google fonts) |
 | 1 | barcodesoft mapping|
