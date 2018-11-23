@@ -1,6 +1,6 @@
 {
   "name": "code-128-encoder",
-  "version": "2.3.1",
+  "version": "3.0.0",
   "description": "an optimizing encoder for your commandline, node.js and your browser",
   "main": "index.js",
   "scripts": {
