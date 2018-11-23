@@ -175,7 +175,6 @@ function Code128Generator(){
   this.getASCIIFromCode = function(code){
     var ascii
     codes.some(function(item){
-      console.log(options.mapping)
         if(item.code===code) ascii=item.ascii[options.mapping]
     })
     return ascii
@@ -189,7 +188,6 @@ function Code128Generator(){
   }.bind(this)
   this.encode = function(s,opt){
     options=Object.assign({output:"ascii",mapping:0},opt)
-    console.log(options)
     var stopCode = String.fromCharCode(this.getASCIIFromCode(106))
     var tmp = this.optimize(s,0,4)
     tmp += String.fromCharCode(this.getASCIIFromCode(this.getChecksum(tmp)))
