@@ -2,9 +2,11 @@
 
 an optimizing code-128 encoder for node.js, the commandline, and your browser.
 
+[live example](#examples)
+
 **this is not a renderer!**
 
-this is a specialized encoder, which you can use to write your own renderer see the [examples](#examples)
+this is a specialized encoder, which you can use to write your own renderer see the [examples](examples/html/encoder.html)
 
 ## install the command line interface
 
