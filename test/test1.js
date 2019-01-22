@@ -20,7 +20,7 @@ describe('node128', function() {
     })
     it('encode should return a code 128 encoded sequence in ascii chars', function () {
       var encoder= new Encoder()
-      assert(encoder.encode("Test", {mapping:2}) == "ÑTestWÓ")
+      assert(encoder.encode("Test",{mapping:2}) === "ÑTestWÓ")
     })
     it('return all infos', function () {
       var encoder= new Encoder()
