@@ -175,7 +175,7 @@ function Code128Generator(){
   this.getASCIIFromCode = function(code){
     var ascii
     codes.some(function(item){
-        if(item.code===code) ascii=item.ascii[options.mapping]
+        if(item.code===code) ascii=item.ascii[options.mapping]||item.ascii[0]
     })
     return ascii
   }.bind(this)
