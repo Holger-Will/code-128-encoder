@@ -4,7 +4,8 @@
   "description": "an optimizing encoder for your commandline, node.js and your browser",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "minify": "google-closure-compiler < index.js > code-128-encoder.min.js"
   },
   "bin": {
     "encode128": "./encode128"
@@ -27,6 +28,7 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "~4.2.0",
+    "google-closure-compiler": "~20190121.0.0",
     "mocha": "~5.2.0"
   }
 }

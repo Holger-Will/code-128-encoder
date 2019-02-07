@@ -14,13 +14,29 @@ describe('node128', function() {
       var encoder= new Encoder()
       assert(typeof encoder.encode("test") === "string")
     })
-    it('encode should return a code 128 encoded sequence in ascii chars', function () {
+    it('encode should return a code 128 encoded sequence in ascii chars using mapping 0', function () {
       var encoder= new Encoder()
       assert(encoder.encode("Test") === "ÌTestWÎ")
     })
-    it('encode should return a code 128 encoded sequence in ascii chars', function () {
+    it('encode should return a code 128 encoded sequence in ascii chars using mapping 2', function () {
       var encoder= new Encoder()
       assert(encoder.encode("Test",{mapping:2}) === "ÑTestWÓ")
+    })
+    it('encode should return a code 128 encoded sequence in ascii chars using mapping 0 and function character', function () {
+      var encoder= new Encoder()
+      assert(encoder.encode("Ê42012345") === "ÌÊÇJ!7MÃÎ")
+    })
+    it('encode should return a code 128 encoded sequence in ascii chars using mapping 2 and function character', function () {
+      var encoder= new Encoder()
+      assert(encoder.encode("Ï42012345",{mapping:2}) === "ÑÏÌJ!7MÈÓ")
+    })
+    it('encode should return a code 128 code c encoded sequence in ascii chars using mapping 0', function () {
+      var encoder= new Encoder()
+      assert(encoder.encode("9596979899") === "ÍÃÄÅÆÇ9Î")
+    })
+    it('encode should return a code 128 code c encoded sequence in ascii chars using mapping 2', function () {
+      var encoder= new Encoder()
+      assert(encoder.encode("9596979899",{mapping:2}) === "ÒÈÉÊËÌ9Ó")
     })
     it('return all infos', function () {
       var encoder= new Encoder()

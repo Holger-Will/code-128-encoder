@@ -131,10 +131,13 @@ function Code128Generator(){
   var options={}
   this.getCodeFromASCII = function (ascii){
     var code
-    codes.some(function(item){
-      item.ascii.some(function(a){
-        if(a===ascii) code=item.code
-      })
+    codes.forEach(function(item){
+      if(ascii===item.ascii[options.mapping]){
+        code=item.code
+      }
+      else if(item.ascii[options.mapping]===undefined && ascii===item.ascii[0]){
+        code=item.code
+      }
     })
     return code
   }.bind(this)
@@ -168,7 +171,7 @@ function Code128Generator(){
   this.getASCIIFromCodeC = function(code){
     var ascii
     codes.some(function(item){
-        if(item.C===code) ascii=item.ascii[0]
+        if(item.C===code) ascii=item.ascii[options.mapping]||item.ascii[0]
     })
     return ascii
   }.bind(this)
