@@ -1,7 +1,7 @@
 // tslint:disable
 
 declare namespace Code128Generator {
-  enum OutputMode {
+  const enum OutputMode {
     /**
      * ASCII characters of the encoded string
      */
@@ -28,7 +28,7 @@ declare namespace Code128Generator {
     ALL = 'all'
   }
 
-  enum Mapping {
+  const enum Mapping {
     /**
      * Most common mapping (compatible with google fonts)
      */
