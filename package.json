@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "description": "an optimizing encoder for your commandline, node.js and your browser",
   "main": "index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "mocha test",
     "minify": "google-closure-compiler < index.js > code-128-encoder.min.js"
