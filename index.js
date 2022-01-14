@@ -16,7 +16,7 @@
     root.Code128Generator = previous_Code128Generator
     return Code128Generator
   }
-}).call(this);
+}).call(typeof window !== 'undefined' ? window : this);
 
 function Code128Generator(){
   var codes=[
